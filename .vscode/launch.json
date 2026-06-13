@@ -1,0 +1,22 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "NestJS Debug",
+      "type": "pwa-node",
+      "request": "launch",
+      "runtimeExecutable": "/bin/bash",
+      "runtimeArgs": [
+        "${workspaceFolder}/scripts/vscode-start-debug.sh"
+      ],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal",
+      "restart": true,
+      "autoAttachChildProcesses": true,
+      "internalConsoleOptions": "neverOpen",
+      "skipFiles": [
+        "<node_internals>/**"
+      ]
+    }
+  ]
+}
