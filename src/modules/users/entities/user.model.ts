@@ -1,11 +1,9 @@
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
-import { randomUUID } from 'crypto';
+import { BaseEntity } from '@shared/core/base.entity';
 
 @Entity('users')
-export class User {
-  @PrimaryColumn()
-  id: string;
+export class User extends BaseEntity {
 
   @Column()
   nome: string;
@@ -19,12 +17,12 @@ export class User {
   @Column()
   senha: string;
 
-  @Column()
-  nascimento: Date;
+  @Column({ type: 'date' })
+  nascimento: string;
 
-  constructor (anUser?: CreateUserDto){
-    this.id = randomUUID();
-    if(anUser) {
+  constructor(anUser?: CreateUserDto) {
+    super();
+    if (anUser) {
       this.nome = anUser.nome;
       this.documento = anUser.documento;
       this.email = anUser.email;

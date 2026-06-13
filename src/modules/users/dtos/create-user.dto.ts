@@ -9,7 +9,7 @@ export class CreateUserDto {
 
   @ApiProperty()
   @IsString()
-  @MaxLength(14, { message: ' Documento deve ter 14 caracteres '})
+  @MaxLength(14, { message: ' Documento deve ter 14 caracteres ' })
   documento: string;
 
   @ApiProperty()
@@ -20,6 +20,6 @@ export class CreateUserDto {
   @IsString()
   senha: string;
 
-  @ApiProperty()
-  nascimento: Date;
+  @ApiProperty({ example: '1917-3-8' })
+  nascimento: string;
 }

@@ -1,7 +1,6 @@
-import { User } from "../entities/user.model";
+import { User } from '../entities/user.model';
 
 export class ViewUserDto {
-
   id: string;
 
   nome: string;
@@ -12,9 +11,9 @@ export class ViewUserDto {
 
   senha: string;
 
-  nascimento: Date;
+  nascimento: string;
 
-  constructor(anUser : User){
+  constructor(anUser: User) {
     this.id = anUser.id;
     this.nome = anUser.nome;
     this.documento = anUser.documento;

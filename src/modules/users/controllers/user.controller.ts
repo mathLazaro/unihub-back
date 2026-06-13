@@ -1,13 +1,13 @@
 import { Body, Controller, Get, HttpCode, Post, UseGuards } from '@nestjs/common';
-import { UserService } from '../../services/users/user.service';
-import { CreateUserDto } from '../../models/users/dtos/create-user.dto';
-import { ViewUserDto } from '../../models/users/dtos/view-user.dto';
-import { JwtGuard } from '../../guards/auth.guard';
+import { UserService } from '../services/user.service';
+import { CreateUserDto } from '../dtos/create-user.dto';
+import { ViewUserDto } from '../dtos/view-user.dto';
+import { JwtGuard } from '@shared/guards/auth.guard';
 import { ApiBearerAuth } from '@nestjs/swagger';
 
 @Controller('user')
 export class UserController {
-  constructor(private readonly service: UserService) {}
+  constructor(private readonly service: UserService) { }
 
   @Post('/create')
   @HttpCode(201)
