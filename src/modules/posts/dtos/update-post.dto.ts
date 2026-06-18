@@ -2,13 +2,6 @@ import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty, IsString, MaxLength } from "class-validator";
 
 export class UpdatePostDto {
-  @ApiProperty({ description: 'Título do post', example: 'Meu primeiro post' })
-  @IsString({ message: 'O título deve ser uma string' })
-  @IsNotEmpty({ message: 'O título do post é obrigatório' })
-  @MaxLength(100, {
-    message: 'O título do post deve ter no máximo 100 caracteres',
-  })
-  title: string;
 
   @ApiProperty({
     description: 'Conteúdo do post',

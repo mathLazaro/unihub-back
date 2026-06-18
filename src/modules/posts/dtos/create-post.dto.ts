@@ -4,13 +4,6 @@ import { PostType } from '@root/modules/posts/enums/post-type.enum';
 import { IsFutureDate } from '@root/shared/decorators/date-validator.decorator';
 
 export class CreatePostDto {
-  @ApiProperty({ description: 'Título do post', example: 'Meu primeiro post' })
-  @IsString({ message: 'O título deve ser uma string' })
-  @IsNotEmpty({ message: 'O título do post é obrigatório' })
-  @MaxLength(100, {
-    message: 'O título do post deve ter no máximo 100 caracteres',
-  })
-  title: string;
 
   @ApiProperty({
     description: 'Conteúdo do post',

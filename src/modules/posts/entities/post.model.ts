@@ -9,11 +9,6 @@ import { BaseEntity } from '@shared/core/base.entity';
 export class Post extends BaseEntity {
 
   @Column({
-    length: 150,
-  })
-  title: string;
-
-  @Column({
     type: 'text',
   })
   content: string;
@@ -55,7 +50,6 @@ export class Post extends BaseEntity {
   constructor(createPost?: CreatePostDto) {
     super();
     if (createPost) {
-      this.title = createPost.title;
       this.content = createPost.content;
       this.type = createPost.type;
       this.contactInfo = createPost.contactInfo;
