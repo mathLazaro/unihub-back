@@ -7,6 +7,7 @@ import { PostRepository } from '../repositories/post.repository';
 import { UpdatePostDto } from '../dtos/update-post.dto';
 import { PageResponseDto } from '@root/shared/dtos/page-response.dto';
 import { ViewFeedWrapperResponse } from '../dtos/feed/feed-wrapper-response';
+import { ViewFeedDto } from '../dtos/feed/view-feed.dto';
 
 
 @Injectable()
@@ -50,15 +51,26 @@ export class PostService {
   async createPost(
     postToSave: CreatePostDto,
     userId: string,
-  ): Promise<ViewPostDto> {
+  ): Promise<ViewFeedDto> {
     if (!postToSave) {
       throw new BadRequestException('Dados obrigatórios não fornecidos');
     }
 
     const post = new Post(postToSave);
-    post.author = await this.userRepository.findByIdOrThrow(userId);
+    const user = await this.userRepository.findByIdOrThrow(userId);
+    post.author = user;
 
-    return new ViewPostDto(await this.repository.save(post));
+    const saved = await this.repository.save(post)
+
+    return {
+      ...saved,
+      author: {
+        id: user.id,
+        name: user.nome,
+      },
+      createdAt: saved.createdAt.toISOString(),
+      expiresAt: saved.expiresAt
+    } satisfies ViewFeedDto;
   }
 
   async updatePostById(

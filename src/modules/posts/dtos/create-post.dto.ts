@@ -28,14 +28,12 @@ export class CreatePostDto {
     description: 'Informações de contato (opcional)',
     example: 'Email: contato@exemplo.com',
   })
-  @IsString({ message: 'As informações de contato devem ser uma string' })
   contactInfo?: string;
 
   @ApiProperty({
     description: 'Localização do evento ou serviço (opcional)',
     example: 'Campus da Universidade, Sala 101',
   })
-  @IsString({ message: 'A localização deve ser uma string' })
   location?: string;
 
   @IsOptional()

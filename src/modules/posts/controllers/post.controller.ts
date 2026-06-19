@@ -20,6 +20,7 @@ import { JwtGuard } from "@root/shared/guards/auth.guard";
 import { CreatePostDto } from "../dtos/create-post.dto";
 import { UpdatePostDto } from "../dtos/update-post.dto";
 import { ViewPostDto } from "../dtos/view-post.dto";
+import { ViewFeedDto } from "../dtos/feed/view-feed.dto";
 
 @Controller('post')
 export class PostController {
@@ -94,7 +95,7 @@ export class PostController {
   async createPost(
     @CurrentUserId() userId: string,
     @Body() post: CreatePostDto
-  ): Promise<ViewPostDto> {
+  ): Promise<ViewFeedDto> {
     return await this.postService.createPost(post, userId);
   }
 

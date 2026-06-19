@@ -1,3 +1,4 @@
+import { Post } from "../../entities/post.model";
 import { PostType } from "../../enums/post-type.enum";
 
 export interface ViewFeedDto {
@@ -9,5 +10,4 @@ export interface ViewFeedDto {
   location?: string;
   expiresAt?: string;
   createdAt?: string;
-
 }
