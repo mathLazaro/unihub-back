@@ -6,6 +6,7 @@ import { UserRepository } from '@modules/users/repositories/user.repository';
 import { PostRepository } from '../repositories/post.repository';
 import { UpdatePostDto } from '../dtos/update-post.dto';
 import { PageResponseDto } from '@root/shared/dtos/page-response.dto';
+import { ViewFeedWrapperResponse } from '../dtos/feed/feed-wrapper-response';
 
 
 @Injectable()
@@ -95,6 +96,10 @@ export class PostService {
     }
 
     await this.repository.softDelete(postId);
+  }
+
+  async getFeed(userId: string, offset: number, limit: number): Promise<ViewFeedWrapperResponse> {
+    return this.repository.getFeed({ userId, offset, limit });
   }
 
 }

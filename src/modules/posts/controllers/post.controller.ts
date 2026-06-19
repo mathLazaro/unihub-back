@@ -25,6 +25,18 @@ import { ViewPostDto } from "../dtos/view-post.dto";
 export class PostController {
   constructor(private readonly postService: PostService) { }
 
+  @Get('feed')
+  @HttpCode(200)
+  @UseGuards(JwtGuard)
+  @ApiBearerAuth('access-token')
+  async getFeed(
+    @CurrentUserId() userId: string,
+    @Query('offset', ParseIntPipe) offset: number,
+    @Query('limit', ParseIntPipe) limit: number,
+  ) {
+    return this.postService.getFeed(userId, offset, limit);
+  }
+
   @Get(':id')
   @UseGuards(JwtGuard)
   @ApiBearerAuth('access-token')
