@@ -28,11 +28,17 @@ export class CreatePostDto {
     description: 'Informações de contato (opcional)',
     example: 'Email: contato@exemplo.com',
   })
+  @MaxLength(100, {
+    message: 'As informações de contato devem ter no máximo 100 caracteres',
+  })
   contactInfo?: string;
 
   @ApiProperty({
     description: 'Localização do evento ou serviço (opcional)',
     example: 'Campus da Universidade, Sala 101',
+  })
+  @MaxLength(150, {
+    message: 'A localização deve ter no máximo 150 caracteres',
   })
   location?: string;
 
