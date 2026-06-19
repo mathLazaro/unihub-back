@@ -25,7 +25,7 @@ export class PostRepository extends BaseRepository<Post> {
     authorId: string,
     page = 0,
     size = 10,
-    query?: string
+    query?: string,
   ): Promise<PageResponseDto<Post>> {
     const skip = page * size;
     const take = size;
@@ -40,11 +40,10 @@ export class PostRepository extends BaseRepository<Post> {
     const [posts, total] = await this.repository.findAndCount({
       ...where,
       skip,
-      take
+      take,
     });
 
     return new PageResponseDto(posts, total, page, size);
-
   }
 
   private generateSeed(userId: string): string {
@@ -52,7 +51,11 @@ export class PostRepository extends BaseRepository<Post> {
     return `${userId}-${today}`;
   }
 
-  async getFeed({ userId, offset, limit }: FeedParams): Promise<ViewFeedWrapperResponse> {
+  async getFeed({
+    userId,
+    offset,
+    limit,
+  }: FeedParams): Promise<ViewFeedWrapperResponse> {
     const seed = this.generateSeed(userId);
 
     const posts = await this.repository.query(
@@ -63,26 +66,31 @@ export class PostRepository extends BaseRepository<Post> {
           author.nome as "author_name"
         FROM posts post
         LEFT JOIN users author ON author.id = post.author_id
-        WHERE post.expires_at IS NULL OR post.expires_at > NOW()
+        WHERE post.deleted_at IS NULL AND (post.expires_at IS NULL OR post.expires_at > NOW())
         ORDER BY md5(post.id::text || $1)
         LIMIT $2 OFFSET $3
     `,
-      [seed, limit, offset]
+      [seed, limit, offset],
     );
 
-    const data = posts.map((post: any) => ({
-      id: post.id,
-      content: post.content,
-      author: {
-        id: post.author_id,
-        name: post.author_name
-      },
-      type: post.type,
-      contactInfo: post.contact_info,
-      location: post.location,
-      expiresAt: post.expires_at,
-      createdAt: post.created_at
-    } as ViewFeedDto));
+    const data = posts.map(
+      (post: any) =>
+        (({
+          id: post.id,
+          content: post.content,
+
+          author: {
+            id: post.author_id,
+            name: post.author_name,
+          },
+
+          type: post.type,
+          contactInfo: post.contact_info,
+          location: post.location,
+          expiresAt: post.expires_at,
+          createdAt: post.created_at
+        }) as ViewFeedDto),
+    );
     const next_offset = offset + limit;
     const has_more = posts.length === limit;
 
