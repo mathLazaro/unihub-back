@@ -1,15 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsDateString, IsEnum, IsNotEmpty, IsOptional, IsString, Matches, MaxLength } from 'class-validator';
 import { PostType } from '@root/modules/posts/enums/post-type.enum';
+import { IsFutureDate } from '@root/shared/decorators/date-validator.decorator';
 
 export class CreatePostDto {
-  @ApiProperty({ description: 'Título do post', example: 'Meu primeiro post' })
-  @IsString({ message: 'O título deve ser uma string' })
-  @IsNotEmpty({ message: 'O título do post é obrigatório' })
-  @MaxLength(100, {
-    message: 'O título do post deve ter no máximo 100 caracteres',
-  })
-  title: string;
 
   @ApiProperty({
     description: 'Conteúdo do post',
@@ -34,19 +28,27 @@ export class CreatePostDto {
     description: 'Informações de contato (opcional)',
     example: 'Email: contato@exemplo.com',
   })
-  @IsString({ message: 'As informações de contato devem ser uma string' })
+  @MaxLength(100, {
+    message: 'As informações de contato devem ter no máximo 100 caracteres',
+  })
   contactInfo?: string;
 
   @ApiProperty({
     description: 'Localização do evento ou serviço (opcional)',
     example: 'Campus da Universidade, Sala 101',
   })
-  @IsString({ message: 'A localização deve ser uma string' })
+  @MaxLength(150, {
+    message: 'A localização deve ter no máximo 150 caracteres',
+  })
   location?: string;
 
+  @IsOptional()
   @ApiProperty({
     description: 'Data de expiração do post (opcional)',
     example: '2024-12-31',
   })
+  @IsFutureDate({ message: 'A data de expiração deve ser uma data futura' })
+  @Matches(/^\d{4}-\d{2}-\d{2}$/, { message: 'A data de expiração deve estar no formato YYYY-MM-DD' })
+  @IsDateString()
   expiresAt?: string;
 }

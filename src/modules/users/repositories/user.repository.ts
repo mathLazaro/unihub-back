@@ -21,4 +21,9 @@ export class UserRepository extends BaseRepository<User> {
     return await this.repository.findOneBy({ email });
   }
 
+  async existsByEmail(email: string): Promise<boolean> {
+    const count = await this.repository.countBy({ email });
+    return count > 0;
+  }
+
 }

@@ -8,8 +8,15 @@ export abstract class BaseRepository<T extends BaseEntity> {
     protected readonly repository: Repository<T>,
   ) { }
 
-  async findByIdOrThrow(id: string): Promise<T> {
-    const entity = await this.repository.findOneBy({ id } as any);
+  get base(): Repository<T> {
+    return this.repository;
+  }
+
+  async findByIdOrThrow(id: string, includeDeleted = false): Promise<T> {
+    const entity = await this.repository.findOne({
+      where: { id: id } as any,
+      withDeleted: includeDeleted
+    });
 
     if (!entity) {
       throw new NotFoundException();

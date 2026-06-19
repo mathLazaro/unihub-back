@@ -20,12 +20,17 @@ async function bootstrap() {
     )
     .build();
 
+  app.enableCors({
+    origin: 'http://localhost:5173',
+    credentials: true,
+  });
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
 
   await app
-    .useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }))
+    .useGlobalPipes(new ValidationPipe({ transform: true }))
     .listen(process.env.PORT ?? 3000);
 }
 bootstrap();
