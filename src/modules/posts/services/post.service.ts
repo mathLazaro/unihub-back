@@ -4,6 +4,7 @@ import { ViewPostDto } from '../dtos/view-post.dto';
 import { Post } from '../entities/post.model';
 import { UserRepository } from '@modules/users/repositories/user.repository';
 import { PostRepository } from '../repositories/post.repository';
+import { NotificationService } from '@root/modules/notification/service/notification.service';
 
 
 @Injectable()
@@ -11,6 +12,7 @@ export class PostService {
   constructor(
     private readonly repository: PostRepository,
     private readonly userRepository: UserRepository,
+    private readonly notificationService: NotificationService
   ) { }
 
   async createPost(
@@ -29,6 +31,8 @@ export class PostService {
 
     const post = new Post(postToSave);
     post.author = await this.userRepository.findByIdOrThrow(userId);
+
+    await this.notificationService.create(post.type);
 
     return new ViewPostDto(await this.repository.save(post));
   }

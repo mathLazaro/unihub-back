@@ -3,6 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { User } from "../entities/user.model";
 import { BaseRepository } from "@shared/core/base.repository";
+import { PostType } from "@root/modules/posts/enums/post-type.enum";
 
 @Injectable()
 export class UserRepository extends BaseRepository<User> {
@@ -19,6 +20,13 @@ export class UserRepository extends BaseRepository<User> {
 
   async findByEmail(email: string): Promise<User | null> {
     return await this.repository.findOneBy({ email });
+  }
+
+  async findAllUsersToNotificate(postType: PostType): Promise<User[]>{
+    return await this.repository
+        .createQueryBuilder('user')
+        .where(':postType = ANY(user.subscribedTypes)', { postType })
+        .getMany();
   }
 
 }
