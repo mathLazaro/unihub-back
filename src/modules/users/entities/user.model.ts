@@ -1,6 +1,7 @@
 import { Column, Entity } from 'typeorm';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { BaseEntity } from '@shared/core/base.entity';
+import { PostType } from '@root/modules/posts/enums/post-type.enum';
 
 @Entity('users')
 export class User extends BaseEntity {
@@ -19,6 +20,13 @@ export class User extends BaseEntity {
 
   @Column({ type: 'date' })
   nascimento: string;
+
+  @Column({
+    type: 'simple-array',
+    nullable: true,
+    default: null,
+  })
+  subscribedTypes: PostType[];
 
   constructor(anUser?: CreateUserDto) {
     super();
