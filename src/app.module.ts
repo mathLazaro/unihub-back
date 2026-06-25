@@ -5,6 +5,7 @@ import { databaseConfig } from './config/database.config';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/users/user.module';
 import { PostModule } from './modules/posts/post.module';
+import { NotificationModule } from './modules/notification/notification.module';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { PostModule } from './modules/posts/post.module';
     AuthModule,
     UserModule,
     PostModule,
-
+    NotificationModule
   ],
 })
 export class AppModule { }

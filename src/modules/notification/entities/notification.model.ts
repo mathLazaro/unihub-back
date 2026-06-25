@@ -2,6 +2,7 @@
 import { User } from "@root/modules/users/entities/user.model";
 import { BaseEntity } from "@root/shared/core/base.entity";
 import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
+import { CreateNotificationDto } from "../dtos/create-notification.dto";
 
 @Entity('notifications')
 export class Notification extends BaseEntity{
@@ -13,24 +14,15 @@ export class Notification extends BaseEntity{
     @Column({ default: false })
     viewed: boolean;
 
-    @Column({ nullable: true })
-    viewed_at: Date | null;
+    @Column({ nullable: true, type: 'date' })
+    viewed_at: string;
 
     @Column()
     message: string;
 
-    constructor(user?: User, message?: string){
-        super();
-        if(user && message){
-            this.user = user;
-            this.viewed = false;
-            this.viewed_at = null;
-            this.message = message;
-        }
-    }
 
     setViewed(): void{
         this.viewed = true;
-        this.viewed_at = new Date();
+        this.viewed_at = new Date().toISOString();
     }
 }
