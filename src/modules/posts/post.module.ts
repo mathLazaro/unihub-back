@@ -5,6 +5,7 @@ import { PostController } from "./controllers/post.controller";
 import { UserModule } from "../users/user.module";
 import { PostService } from "./services/post.service";
 import { PostRepository } from "./repositories/post.repository";
+import { NotificationModule } from "../notification/notification.module";
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { PostRepository } from "./repositories/post.repository";
       Post,
     ]),
     UserModule,
+    NotificationModule
   ],
   controllers: [PostController],
   providers: [PostService, PostRepository],

@@ -19,7 +19,15 @@ export class NotificationService{
 
         const allUsersToNotificate = await this.userRepository.findAllUsersToNotificate(postType);
 
-        const notifications = allUsersToNotificate.map(user => new Notification(user, message));
+
+        const notifications = allUsersToNotificate.map(user => 
+            Object.assign(new Notification(), {
+                user,
+                message,
+                viewed: false,
+                viewed_at: null,
+            })
+        );
 
         await this.repository.saveAll(notifications);
     }

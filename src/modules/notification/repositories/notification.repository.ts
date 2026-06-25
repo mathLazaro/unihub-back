@@ -3,11 +3,12 @@ import { BaseRepository } from "@root/shared/core/base.repository";
 import { Notification } from "../entities/notification.model";
 import { Repository } from "typeorm";
 import { User } from "@root/modules/users/entities/user.model";
+import { InjectRepository } from "@nestjs/typeorm";
 
 @Injectable()
 export class NotificationRepository extends BaseRepository<Notification>{
     constructor(
-        @Inject(Notification)
+        @InjectRepository(Notification)
         protected readonly repository: Repository<Notification>,
     ){
         super(repository);
@@ -40,7 +41,7 @@ export class NotificationRepository extends BaseRepository<Notification>{
     async viewedAllByUser(user: User): Promise<void>{
         await this.repository.update(
             { user: { id: user.id }, viewed: false },
-            { viewed: true, viewed_at: new Date() }
+            { viewed: true, viewed_at: new Date().toISOString() }
         );
     }
 }
