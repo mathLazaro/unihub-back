@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEnum, IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { IsEnum, IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
 import { PostType } from '@root/modules/posts/enums/post-type.enum';
 
 export class CreatePostDto {
@@ -34,6 +34,7 @@ export class CreatePostDto {
     description: 'Informações de contato (opcional)',
     example: 'Email: contato@exemplo.com',
   })
+  @IsOptional()
   @IsString({ message: 'As informações de contato devem ser uma string' })
   contactInfo?: string;
 
@@ -41,6 +42,7 @@ export class CreatePostDto {
     description: 'Localização do evento ou serviço (opcional)',
     example: 'Campus da Universidade, Sala 101',
   })
+  @IsOptional()
   @IsString({ message: 'A localização deve ser uma string' })
   location?: string;
 
