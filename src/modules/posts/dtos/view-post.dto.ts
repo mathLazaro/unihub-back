@@ -10,6 +10,8 @@ export class ViewPostDto {
   contactInfo?: string;
   location?: string;
   expiresAt?: string;
+  createdAt: Date;
+  author: { id: string; name: string };
 
   constructor(post?: Post) {
     if (post) {
@@ -21,6 +23,11 @@ export class ViewPostDto {
       this.contactInfo = post.contactInfo;
       this.location = post.location;
       this.expiresAt = post.expiresAt;
+      this.createdAt = post.createdAt;
+      this.author = {
+        id: post.author?.id,
+        name: post.author?.nome,
+      };
     }
   }
 }
