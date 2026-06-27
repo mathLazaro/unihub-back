@@ -25,7 +25,7 @@ export class UserRepository extends BaseRepository<User> {
   async findAllUsersToNotificate(postType: PostType): Promise<User[]>{
     return await this.repository
         .createQueryBuilder('user')
-        .where(':postType = ANY(user.subscribedTypes)', { postType })
+        .where('user.subscribedTypes LIKE :postType', { postType: `%${postType}%` })
         .getMany();
   }
 

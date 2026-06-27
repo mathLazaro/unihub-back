@@ -1,4 +1,5 @@
 import { Body, Controller, HttpCode, Post } from "@nestjs/common";
+import { Throttle } from "@nestjs/throttler";
 import { LoginDto } from "../dtos/login.dto";
 import { AuthService } from "../services/auth.service";
 
@@ -9,6 +10,7 @@ export class AuthController {
 
   @Post('/login')
   @HttpCode(200)
+  @Throttle({ default: { limit: 5, ttl: 60000 } })
   async login(@Body() login: LoginDto): Promise<{ token: string }> {
     return await this.service.login(login);
   }
