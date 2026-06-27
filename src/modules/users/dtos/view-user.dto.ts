@@ -9,16 +9,22 @@ export class ViewUserDto {
 
   email: string;
 
-  senha: string;
-
   nascimento: string;
+
+  tipo: string;
+
+  universidade?: string;
+
+  curso?: string;
 
   constructor(anUser: User) {
     this.id = anUser.id;
     this.nome = anUser.nome;
     this.documento = anUser.documento;
     this.email = anUser.email;
-    this.senha = anUser.senha;
     this.nascimento = anUser.nascimento;
+    this.tipo = anUser.tipo;
+    this.universidade = anUser.universidade;
+    this.curso = anUser.curso;
   }
 }
