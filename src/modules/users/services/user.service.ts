@@ -4,6 +4,7 @@ import { UserRepository } from '../repositories/user.repository';
 import { ViewUserDto } from '../dtos/view-user.dto';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { User } from '../entities/user.model';
+import { PostType } from '@root/modules/posts/enums/post-type.enum';
 
 @Injectable()
 export class UserService {
@@ -22,8 +23,10 @@ export class UserService {
   }
 
 
-  getHello(): string {
-    return 'Hello World!';
+  async subscribeTag(tags: PostType[], userId: string): Promise<void> {
+    const user = await this.repository.findByIdOrThrow(userId);
+    user.subscribedTypes = tags;
+    this.repository.save(user);
   }
 
 }

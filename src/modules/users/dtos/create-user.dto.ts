@@ -21,5 +21,6 @@ export class CreateUserDto {
   senha: string;
 
   @ApiProperty({ example: '1917-3-8' })
+  @IsString()
   nascimento: string;
 }

@@ -48,5 +48,6 @@ export class CreatePostDto {
     description: 'Data de expiração do post (opcional)',
     example: '2024-12-31',
   })
+  @IsString()
   expiresAt?: string;
 }

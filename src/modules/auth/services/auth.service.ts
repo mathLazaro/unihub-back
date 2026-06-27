@@ -13,6 +13,7 @@ export class AuthService {
   ) { }
 
   async login(dto: LoginDto): Promise<{ token: string }> {
+    console.log(dto)
     const user = await this.userRepository.findByEmail(dto.email);
 
     if (!user || !(await bcrypt.compare(dto.senha, user.senha))) {
